@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity 0.8.20;
 
 import "lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
 import "lib/openzeppelin-contracts/contracts/token/ERC721/utils/ERC721Holder.sol";
-import "lib/openzeppelin-contracts/contracts/utils/Counters.sol";
-import "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
-import {ReentrancyGuard} from "./abstract/ReentrancyGuard.sol";
+import {Counters} from "./utils/Counters.sol";
+import {ReentrancyGuard} from "./utils/ReentrancyGuard.sol";
 import {ISwirlio} from "./interfaces/ISwirlio.sol";
 
 /**
@@ -15,13 +14,11 @@ import {ISwirlio} from "./interfaces/ISwirlio.sol";
  * @dev This contract is for P2P trading non-fungible tokens (NFTs)
  * @dev Please reach out to alikonuk1@protonmail.com regarding to this contract
  */
-contract Swirlio is ISwirlio, ERC721Holder, ReentrancyGuard, Ownable {
+contract Swirlio is ISwirlio, ERC721Holder, ReentrancyGuard {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tradeId;
     mapping(uint256 => Trade) public trades;
-
-    uint256 public fee;
 
     function openTrade(
         address[] calldata offerNfts,
@@ -79,10 +76,6 @@ contract Swirlio is ISwirlio, ERC721Holder, ReentrancyGuard, Ownable {
         payable
         nonReentrant
     {
-        require(msg.value == fee, "Incorrect fee sent!");
-        if(msg.value != fee){
-            revert PAY_FEE();
-        }
         Trade storage trade = trades[tradeId];
 
         if (trade.isOpen == false) {
@@ -133,15 +126,6 @@ contract Swirlio is ISwirlio, ERC721Holder, ReentrancyGuard, Ownable {
             trades[tradeId].requestNfts,
             trades[tradeId].isOpen
         );
-    }
-
-    function setFee(uint256 _fee) external onlyOwner {
-        fee = _fee;
-    }
-
-    function withdrawFees() external onlyOwner {
-        (bool sent, ) = payable(owner()).call{value: address(this).balance}("");
-        require(sent, "Failed to send Ether");
     }
 
 }

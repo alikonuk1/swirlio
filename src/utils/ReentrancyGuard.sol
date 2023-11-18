@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity 0.8.20;
 
 abstract contract ReentrancyGuard {
     uint256 private constant _NOT_ENTERED = 1;
