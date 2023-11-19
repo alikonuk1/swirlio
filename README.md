@@ -16,5 +16,6 @@ Swirlio is deployed on multiple networks. Here are the contract addresses:
 - **Sepolia**: `0x105088644A2CFebDAEeE95fb3F4f29abF75f700E`
 - **Arbitrum Stylus**: `0xB1BB87FF47988C3cA10822d13E0cE7A381C40974`
 - **Base**: `0x3219b1E9ec313ff51a95a3CAC987c293CaeAdD71`
+- **Polygon zkEVM Testnet**: `0x82f9C4aE967e27E333F9EDC7Ef45224b62e9ea05`
 - **Polygon**: `0x8Ff56a5527ed1faa9cAF25aD3EF7cDDe7Aa2d794`
 - **Scroll Testnet**: `0xB1BB87FF47988C3cA10822d13E0cE7A381C40974`
